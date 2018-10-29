@@ -166,5 +166,6 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
-
+.exe
+.exe
 # End of https://www.gitignore.io/api/android,androidstudio
