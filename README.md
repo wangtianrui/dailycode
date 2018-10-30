@@ -49,6 +49,8 @@
   **Solution:**
 
   ```c
+  //加法
+  //难点：遇十进一的问题
   struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) 
   {
   	struct ListNode * pre = NULL ;
@@ -108,3 +110,99 @@
   	return result ;
   }
   ```
+
+  * Given a string, find the length of the **longest substring** without repeating characters.
+
+    **Example 1:**
+
+    ```
+    Input: "abcabcbb"
+    Output: 3 
+    Explanation: The answer is "abc", with the length of 3. 
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: "bbbbb"
+    Output: 1
+    Explanation: The answer is "b", with the length of 1.
+    ```
+
+    **Example 3:**
+
+    ```
+    Input: "pwwkew"
+    Output: 3
+    Explanation: The answer is "wke", with the length of 3. 
+                 Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+    ```
+
+    **Solution:**
+
+    ```c
+    //字符串动态匹配的问题。
+    //难点：C语言数组动态扩充
+    int lengthOfLongestSubstring(char* s)
+    {
+    	int i , j ;
+    	int index = 0 ;
+    	int length = 0 ;
+    	int elementSize = 0 ;
+    	char * elements = NULL ;
+    	char * temps = NULL ;
+    	int max = 0;
+    	int location ;
+    	while(s[index]!='\0')
+    	{
+    		int content = 0;
+    		for( i = 0 ; i < elementSize ; i ++)
+    		{
+    			if(elements[i]==s[index])
+    			{
+    				location = i ;
+    				content = 1 ;
+    				break ;
+    			}
+    		}
+    		if(content==0)
+    		{
+    			elementSize += 1 ;
+    			if(elements)
+    			{
+    				temps = (char *)malloc(sizeof(char)*elementSize);
+    				for(i = 0 ; i < (elementSize - 1) ; i++)
+    				{
+    					temps[i] = elements[i];
+    				}
+    				elements = temps ;
+    			}
+    			else
+    			{
+    				elements = (char *)malloc(sizeof(char)*elementSize);
+    			}
+    			elements[elementSize - 1] = s[index];
+    		}
+    		else
+    		{
+    			int newSize = elementSize - i ;
+    			char * temps = (char *)malloc(sizeof(char)*(newSize));
+    			j = 0;
+    			for(i = location + 1  ; i < location + newSize ; i++ )
+    			{				
+    				temps[j] = elements[i];
+    				j++;
+    			}
+    			temps[j] = s[index];
+    			elementSize = newSize ; 
+    			elements = temps ;			
+    		}
+    		index ++;
+    		if(max < elementSize)
+    		{
+    			max = elementSize ;
+    		}
+    	}
+    	return max ;
+    }
+    ```
