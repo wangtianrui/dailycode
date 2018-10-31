@@ -192,9 +192,163 @@ int lengthOfLongestSubstring(char* s)
 	return max ;
 }
 
+char* longestPalindrome(char* s) 
+{
+    int head , tail , index , t ;
+    index = 0 ;
+    int size = 0 ;
+    char * result = NULL ; 
+	while(s[index]!='\0')
+	{
+		size++;
+	} 
+	tail = size ;
+	while(head <= size / 2)
+	{
+		t = tail ; 
+		if(s[head]!=s[t])
+		{
+			t--;
+		}
+		else
+		{
+			
+		}
+		
+		if(tail == head + 1)
+		{
+			head ++ ;
+			tail -- ;
+		}
+	}
+}
+
+double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size) 
+{
+    int targetIndex = 0 , resultIndex = 0 , isSequ = 0 , lastIsArr1 = 0;
+    int index1 = 0 , index2 = 0 ;
+    double result = 0;
+    
+    if((nums1Size + nums2Size) % 2 == 0)
+    {
+    	targetIndex = (nums1Size + nums2Size) / 2  ;
+    	if(nums1Size == 0)
+    	{
+    		return (nums2[targetIndex]+nums2[targetIndex+1]) / 2.0 ;
+    	}
+    	else if(nums2Size == 0)
+    	{
+    		return (nums1[targetIndex]+nums1[targetIndex+1]) / 2.0 ;
+    	}
+    	while(index1 + index2 + 2 <= targetIndex )
+    	{
+    		if(nums1[index1] < nums2[index2])
+    		{
+    			index1 ++ ;
+    			if(lastIsArr1)
+    			{
+    				isSequ = 1 ;
+    			}
+    			lastIsArr1 = 1 ;	
+    		}
+    		else
+    		{
+    			index2 ++ ;
+				if(!lastIsArr1)
+    			{
+    				isSequ = 1 ;
+    			}
+    			lastIsArr1 = 0 ;		
+    		}
+    	}
+    	if(isSequ)
+    	{
+//    		printf("issequ\n");
+    		if(lastIsArr1)
+    		{
+//    			printf("arr1\n");
+    			if(index1 < nums1Size)
+    			{
+//    				printf("小于，%d,%d\n",index1,index2);
+    				result = (nums1[index1] + nums1[index1 + 1] ) / 2.0 ;  	
+    			}
+    			else if(index1 == nums1Size)
+    			{
+//    				printf("等于，%d,%d\n",index1,index2);
+    				result = (nums1[index1] + nums2[index2]) / 2.0 ;  
+    			}
+    		}
+    		else
+    		{
+//    			printf("arr2\n");
+    			result = (nums2[index2] + nums2[index2 + 1]) / 2.0 ;  
+    		}
+    	}
+    	else
+		{
+//			printf("nosequ\n");
+			result = (nums1[index1] + nums2[index2]) / 2.0 ;  
+    	}	
+    }
+    else
+    {
+    	targetIndex = (nums1Size + nums2Size) / 2  ;
+    	if(nums1Size == 0)
+    	{
+    		return (nums2[targetIndex]) ;
+    	}
+    	else if(nums2Size == 0)
+    	{
+    		return (nums1[targetIndex])  ;
+    	}
+    	targetIndex = (nums1Size + nums2Size) / 2 ;
+    	while((index1 + index2) < targetIndex)
+    	{
+    		if(nums1[index1] < nums2[index2])
+    		{
+    			index1 ++ ;
+    			if(nums1[index1] < nums2[index2])
+    			{
+    				lastIsArr1 = 1 ;
+    			}
+				else
+				{
+					lastIsArr1 = 0 ;
+				}
+    		}
+    		else
+			{
+				index2 ++ ;
+				if(nums1[index1] < nums2[index2])
+    			{
+    				lastIsArr1 = 1 ;
+    			}
+				else
+				{
+					lastIsArr1 = 0 ;
+				}
+    		}
+    	}
+    	if(lastIsArr1)
+    	{
+    		result = nums1[index1] ;
+    	}
+    	else
+    	{
+    		result =  nums2[index2];
+    	}
+//    	printf("%d,%d,%d\n",index1,index2,targetIndex);
+    }
+    return result ;
+}
+
 int main()
 {
-	char * input = "nfpdmpi";
-	printf("%d\n",lengthOfLongestSubstring(input));
+	int * arr1 = NULL;
+	int arr2 [2] = {2,3};
+	
+	int size1 = 0 ;
+	int size2 = 2 ;
+	printf("%lf",findMedianSortedArrays(arr1,size1,arr2,size2));
 	return 0;
 }
