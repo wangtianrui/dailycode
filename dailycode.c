@@ -346,131 +346,111 @@ int targetIndex = 0 , resultIndex = 0 , isSequ = 0 , lastIsArr1 = 0;
 #include<stdio.h>
 double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size) 
 {
-    int wholeCount = 0 ;
-    wholeCount = nums1Size + nums2Size ;
-    int cast = (wholeCount + 1) / 2 ;    //��ż�м���index��ȡ��
-	int index1 = 0 , index2 = 0 , flag = 0 , mid1 = 0 , mid2 = 0 ;
-	double result = 0.0 ;
-	if(nums1Size == 0)
+    double result = 0 ;
+	int index1 = 0 , index2 = 0 , mid1 = 0 , mid2 = 0 ; 
+	int wholeCount = nums1Size + nums2Size ;
+	
+	while(index1 + index2 + 1 < (wholeCount + 1) / 2)
 	{
-		if(wholeCount % 2 == 0)
+		if(index1 == nums1Size)
 		{
-			return (nums2[cast] + nums2[cast - 1]) / 2.0 ;
-		}
-		else
-		{
-			return nums2[cast-1];
-		}
-	}
-	else if(nums2Size == 0)
-	{
-		if(wholeCount % 2 == 0)
-		{
-			return (nums1[cast] + nums1[cast -1]) / 2.0 ;
-		}
-		else
-		{
-			return nums1[cast-1];
-		}
-	}
-	while(flag < cast - 1)
-	{
-		if(nums1[index1]<nums2[index2])
-		{
-//			printf("1++\n");
-			index1 ++ ;
-			if(!checkIndex(index1,nums1Size))
-			{
-				index2 ++ ;
-			}
-		}
-		else
-		{
-//			printf("2++\n");
 			index2 ++ ;
-			if(!checkIndex(index2,nums2Size))
-			{
-				index1 ++ ;
-			}
 		}
-		flag ++ ;
+		else if( index2 == nums2Size )
+		{
+			index1 ++ ;
+		}
+		else if (nums1[index1]<nums2[index2])
+		{
+			index1 ++ ;
+		}
+		else if (nums1[index1]>=nums2[index2])
+		{
+			index2 ++;
+		}
+		printf("%d,%d\n",index1,index2);
 	}
-	
-	
 	if(wholeCount % 2 == 0)
 	{
-		printf("%d,%d,\n",index1,index2);
-		if(nums1[index1] < nums2[index2])
+		if(index1 == nums1Size)
 		{
-			mid1 = nums1[index1];	
-			index1 += 1 ;
-			if(!checkIndex(index1,nums1Size))
-			{
-				index2 ++ ;
-			}
+			result = (nums2[index2]+nums2[index2+1])/2.0;
+			return result ;
 		}
-		else
+		else if (index2 == nums2Size)
+		{
+			result = (nums1[index1]+nums1[index1+1])/2.0;
+			return result ;
+		}
+		else if (nums1[index1]<nums2[index2])
+		{
+			mid1 = nums1[index1];
+			index1 ++ ;
+		}
+		else if (nums1[index1]>=nums2[index2])
 		{
 			mid1 = nums2[index2];
-			index2 += 1;
-			if(!checkIndex(index2,nums2Size))
-			{
-				index1 ++ ;
-			}
+			index2 ++ ;
 		}
-		printf("%d,%d,\n",index1,index2);
-		if(nums1[index1] < nums2[index2])
+		/*------------------------*/
+		if(index1 == nums1Size)
+		{
+			result = (nums2[index2]+mid1)/2.0;
+			return result ;
+		}
+		else if (index2 == nums2Size)
+		{
+			result = (nums1[index1]+mid1)/2.0;
+			return result ;
+		}
+		else if (nums1[index1]<nums2[index2])
 		{
 			mid2 = nums1[index1];
 		}
-		else
+		else if (nums1[index1]>=nums2[index2])
 		{
 			mid2 = nums2[index2];
 		}
-		printf("%d,%d\n",mid1,mid2);
-		result = (mid1+mid2) / 2.0 ;
+		result = (mid1 + mid2) / 2.0 ;
 	}
 	else
 	{
-//		printf("%d,%d,nums2:%d\n",index1,index2,nums2[0]);
-		if(nums1[index1] < nums2[index2])
-		{
-			result = nums1[index1];
-//			printf("1\n");
-		}
-		else
+		if(index1 == nums1Size)
 		{
 			result = nums2[index2];
-//			printf("2,index2:%d\n",nums2[index2]);
+			return result ;
+		}
+		else if (index2 == nums2Size)
+		{
+			result = nums1[index1];
+			return result ;
+		}
+		else if (nums1[index1]<nums2[index2])
+		{
+			result = nums1[index1];
+		}
+		else if (nums1[index1]>=nums2[index2])
+		{
+			result = nums2[index2];
 		}
 	}
 	return result ;
 }
 
-int checkIndex(int index,int size)
-{
-	if(index>=size)
-	{
-		return 0;
-	}
-	else
-	{
-		return 1 ;
-	}
-}
+
 int main()
 {
 	int i ;
-	int  arr1[2] = {1,2};
-	int arr2[2] = {3,4};
+//	int  arr1[2] = {1,2};
+//	int arr2[2] = {3,4};
+//	
+//	int size1 = 2 ;
+//	int size2 = 2 ;	
 	
 	int size1 = 2 ;
-	int size2 = 2 ;	
-	
-//	int size1 = 0 ;
-//	int size2 = 2 ;
-//	int arr1[0] = {};
-//	int arr2 [2] = {2,3};
+	int size2 = 2 ;
+	int arr1[2] = {1,2};
+	int arr2 [2] = {3,4};
 	printf("%lf",findMedianSortedArrays(arr1,size1,arr2,size2));
 //	printf("hello");
 	return 0;
