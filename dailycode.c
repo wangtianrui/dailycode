@@ -344,6 +344,7 @@ int targetIndex = 0 , resultIndex = 0 , isSequ = 0 , lastIsArr1 = 0;
 */
 
 #include<stdio.h>
+#include<string.h>
 double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size) 
 {
     double result = 0 ;
@@ -437,21 +438,91 @@ double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Si
 	return result ;
 }
 
+/*
+检查是否是回文
+s: "avbd"
+length : 4
+*/
+int checkIsHuiWen(char *s , int indexFirst , int indexSecond)
+{
+	while(indexFirst <= indexSecond)
+	{
+		printf("%d:%c,%d:%c\n",indexFirst,s[indexFirst],indexSecond,s[indexSecond]);
+		if(s[indexFirst]!=s[indexSecond])
+		{
+			return 0;
+		}
+		indexSecond--;
+		indexFirst ++ ;
+	}
+	return 1 ;
+}
+
+/*
+字符串裁剪
+string:123456
+star:1
+end:4
+return:2345 
+*/
+char* clipStr(char* string , int star , int length)
+{
+	int i;
+	char * returnString = (char *)malloc((sizeof(char))*(length+1));
+	for(i = 0; i < length ; star++)
+	{
+		returnString[i] = string[star];
+		i++;
+	}
+	returnString[i]='\0';  // 记住加\0 ，如果不写的话，会自动填充一个随机地址 
+	return returnString ;
+} 
+/*
+字符串保存：用初始位置和长度来保存，以免开辟新空间来存！ 
+*/
+char* longestPalindrome(char* s) {
+	
+ 	int indexFirst = 0 , indexSecond = 0;
+	int length = 0 ;   
+	int maxSize = 0 ;
+	int maxStart = 0 ; 
+	char * maxClip = NULL ;
+	length = strlen(s);
+	if(length <= 1)
+	{
+		return s;
+	}
+	for(; indexFirst <= length - maxSize ; indexFirst ++)
+	{
+		indexSecond = length - 1;
+		while(indexSecond >= indexFirst)
+		{
+			if(s[indexSecond]==s[indexFirst])
+			{
+				printf("indexF:%d,indexS:%d,length:%d\n",indexFirst,indexSecond,length);
+				if(checkIsHuiWen(s,indexFirst,indexSecond))
+				{
+					if(maxSize < indexSecond - indexFirst + 1)
+					{
+						maxSize = indexSecond - indexFirst + 1;
+						maxClip = clipStr(s,indexFirst,maxSize) ;
+					}
+				}
+			}
+			indexSecond --;
+		}	
+	}
+	return maxClip ;
+}
+
+ 
+
 
 int main()
 {
-	int i ;
-//	int  arr1[2] = {1,2};
-//	int arr2[2] = {3,4};
-//	
-//	int size1 = 2 ;
-//	int size2 = 2 ;	
-	
-	int size1 = 2 ;
-	int size2 = 2 ;
-	int arr1[2] = {1,2};
-	int arr2 [2] = {3,4};
-	printf("%lf",findMedianSortedArrays(arr1,size1,arr2,size2));
-//	printf("hello");
+	char test1 [5] = "babad";
+//	char test2 [4] = "caba";
+	printf("%s\n",longestPalindrome(test1));
+//	printf("%s",longestPalindrome(test2));
 	return 0;
 }

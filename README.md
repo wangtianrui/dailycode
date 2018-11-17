@@ -330,3 +330,93 @@
     //总结：每次一定要仔细思考题目，把所有的可能性考虑周到后列出来，然后找其中的共同点等。不要拿着题就开始写，事倍功半。
     //解题思路总结：涉及到一个数数问题，数组下标和数数之间的关系！index++ 就数了一个。那么下次比的就是没有数过的（关键），然后就是C语言中的数组越界问题，他不会报错，会瞎鸡巴给随机数，所以一定要时刻index和size比较，比较后再操作！
     ```
+
+  * Given a string **s**, find the longest palindromic substring in **s**. You may assume that the maximum length of **s** is 1000.
+
+    **Example 1:**
+
+    ```
+    Input: "babad"
+    Output: "bab"
+    Note: "aba" is also a valid answer.
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: "cbbd"
+    Output: "bb"
+    ```
+
+    **Solution：**
+
+    ```c
+    /*
+    检查是否是回文
+    */
+    int checkIsHuiWen(char *s , int indexFirst , int indexSecond)
+    {
+    	while(indexFirst <= indexSecond)
+    	{
+    		printf("%d:%c,%d:%c\n",indexFirst,s[indexFirst],indexSecond,s[indexSecond]);
+    		if(s[indexFirst]!=s[indexSecond])
+    		{
+    			return 0;
+    		}
+    		indexSecond--;
+    		indexFirst ++ ;
+    	}
+    	return 1 ;
+    }
+    
+    /*
+    字符串裁剪 
+    */
+    char* clipStr(char* string , int star , int length)
+    {
+    	int i;
+    	char * returnString = (char *)malloc((sizeof(char))*(length+1));
+    	for(i = 0; i < length ; star++)
+    	{
+    		returnString[i] = string[star];
+    		i++;
+    	}
+    	returnString[i]='\0';  // 记住加\0 ，如果不写的话，会自动填充一个随机地址 
+    	return returnString ;
+    } 
+    /*
+    字符串保存：用初始位置和长度来保存，以免开辟新空间来存！ 
+    */
+    char* longestPalindrome(char* s) {
+    	
+     	int indexFirst = 0 , indexSecond = 0;
+    	int length = 0 ;   
+    	int maxSize = 0 ;
+    	int maxStart = 0 ; 
+    	char * maxClip = NULL ;
+    	length = strlen(s);
+    	if(length <= 1)
+    	{
+    		return s;
+    	}
+    	for(; indexFirst <= length - maxSize ; indexFirst ++)
+    	{
+    		indexSecond = length - 1;
+    		while(indexSecond - indexFirst >= maxSize)
+    		{
+    			if(s[indexSecond]==s[indexFirst])
+    			{
+    				printf("indexF:%d,indexS:%d,length:%d\n",indexFirst,indexSecond,length);
+    				if(checkIsHuiWen(s,indexFirst,indexSecond))
+    				{
+    					maxSize = indexSecond - indexFirst + 1;
+    					maxClip = clipStr(s,indexFirst,maxSize) ;
+    				}
+    			}
+    			indexSecond --;
+    		}	
+    	}
+    	return maxClip ;
+    }
+    
+    ```
