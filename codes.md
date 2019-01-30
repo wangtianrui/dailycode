@@ -239,6 +239,7 @@ void function(int *a, int target, int length)
 		}
 	}
 
+    
 	if (star > end)
 	{
 		int i = 0;
