@@ -12,8 +12,10 @@ int deleteX(int *a, int x, int length)
 		if (a[i] == x)
 		{
 			count++;
-			a[i] = a[i + count];
-			i--;
+		}
+		else
+		{
+			a[i - count] = a[i];
 		}
 	}
 	length -= count;
