@@ -1,33 +1,51 @@
-﻿//合并两有序数组
+﻿//在顺序表中查找某值，若没找到就插入
 #include "pch.h"
 #include <iostream>
 
 void showArray(int as[], int length);
 
-int deleteX(int *a, int x, int length)
+void function(int *a, int target, int length)
 {
-	int count = 0;
-	for (int i = 0; i < length; i++)
+	int star = 0, end = length - 1, index = 0;
+	while (star <= end)
 	{
-		if (a[i] == x)
+		index = (star + end) / 2;
+		if (a[index] == target)
 		{
-			count++;
+			if (index != length-1)
+			{
+				a[index] = a[index] + a[index + 1];
+				a[index + 1] = a[index] - a[index + 1];
+				a[index] = a[index] - a[index + 1];
+			}
+			break;
+		}
+		else if (a[index] > target)
+		{
+			end = index - 1;
 		}
 		else
 		{
-			a[i - count] = a[i];
+			star = index + 1;
 		}
 	}
-	length -= count;
-	return length;
-}
+	printf("%d,%d\n", star, end);
+	if (star > end)
+	{
+		/*int i = 0;
+		for (i = length - 1; i > end; i--)
+		{
+			a[i + 1] = a[i];
+		}
+		a[i + 1] = target;*/
+	}
 
+}
 int main()
 {
-
-	int a[10] = { 1,2,44,2,2,2,5,3,1,2 };
-	int len = deleteX(a, 2, 10);
-	showArray(a, len);
+	int a[9] = { 1,2,4,5,6,7,8,9,10 };
+	function(a, -1, 9);
+	showArray(a, 9);
 }
 
 void showArray(int as[], int length)
@@ -37,3 +55,5 @@ void showArray(int as[], int length)
 		printf("%d\t", as[i]);
 	}
 }
+
+
