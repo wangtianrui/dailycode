@@ -6,27 +6,48 @@ typedef struct LNode {
 	struct LNode * next;
 }LNode, *LinkList;
 
-LinkList onCreate(LinkList L)
+//LinkList onCreate(LinkList L)
+//{
+//	LNode * node = NULL;
+//	int x;
+//	scanf_s("%d", &x);
+//	if (L == NULL)
+//	{
+//		L = (LinkList)malloc(sizeof(LinkList));
+//		L->next = NULL;
+//	}
+//	while (x != 9999)
+//	{
+//		node = (LNode *)malloc(sizeof(LNode));
+//		node->value = x;
+//		node->next = L->next;
+//
+//		L->next = node;
+//		scanf_s("%d", &x);
+//	}
+//	return L;
+//}
+
+LinkList insertOnHead(LinkList L)
 {
-	LNode * node = NULL;
-	int x;
-	scanf_s("%d", &x);
+	//注意第一个为空
 	if (L == NULL)
 	{
 		L = (LinkList)malloc(sizeof(LinkList));
 		L->next = NULL;
 	}
-	while (x != 9999)
+	int x;
+	scanf_s("%d", &x);
+	while (x != 999)//输入999停止输入
 	{
-		node = (LNode *)malloc(sizeof(LNode));
-		node->value = x;
-		node->next = L->next;
-		L->next = node;
+		LinkList p = (LinkList)malloc(sizeof(LinkList));
+		p->value = x;
+		p->next = L->next;
+		L->next = p;
 		scanf_s("%d", &x);
 	}
 	return L;
 }
-
 void showLinkList(LinkList head)
 {
 	LinkList p = NULL;
@@ -44,6 +65,6 @@ void showLinkList(LinkList head)
 int main()
 {
 	LinkList head = NULL;
-	head = onCreate(head);
+	head = insertOnHead(head);
 	showLinkList(head);
 }

@@ -82,3 +82,64 @@
 
 ## 链表
 
+通常第一个节点为空
+
+* 链表的结点声明
+
+  ```c++
+  typedef int ElemType;
+  typedef struct LNode {
+  	ElemType value;
+  	struct LNode * next;
+  }LNode, *LinkList;    //这里LinkList直接表示
+  ```
+
+* 插入
+
+  * 头插
+
+  ```c++
+  LinkList insertOnHead(LinkList L)
+  {
+      //注意第一个为空
+      if(L == NULL)
+      {
+          L = (LinkList)malloc(sizeof(LinkList));
+          L->next = NULL;
+      }
+      int x ;
+      scanf("%d",&x);
+      while(x!=999)//输入999停止输入
+      {
+          LinkList p = (LinkList)malloc(sizeof(LinkList));
+          p->value = x ;
+          p->next = L->next;
+          L->next = p;
+          scanf("%d",&x);
+      }
+      return L;
+  }
+  ```
+
+  * 尾插
+
+  ```c++
+  LinkList insertOnTail(LinkList L)
+  {
+      if(L == NULL)
+      {
+          L = (LinkList)malloc(sizeof(LinkList));
+          L->next = NULL;
+      }
+      int x = 0 ;
+      scanf("%d",&x);
+      while(x!=999)
+      {
+          LinkList p = (LinkList)malloc(sizeof(LinkList));
+          p->value = x ;
+          
+      }
+      return L;
+  }
+  ```
+
