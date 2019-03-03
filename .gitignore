@@ -184,3 +184,6 @@ fabric.properties
 *.idb
 *.pdb
 *.tlog
+*.vcxproj.user
+*.user
+*.o
