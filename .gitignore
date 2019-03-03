@@ -17,6 +17,8 @@ bin/
 gen/
 out/
 
+.vscode
+
 # Gradle files
 .gradle/
 build/
@@ -169,3 +171,16 @@ fabric.properties
 .exe
 .exe
 # End of https://www.gitignore.io/api/android,androidstudio
+
+*.vscode
+*.exe
+*.o
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.users
+*.log
+*.obj
+*.pch
+*.idb
+*.pdb
+*.tlog

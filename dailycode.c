@@ -495,18 +495,15 @@ char* longestPalindrome(char* s) {
 	for(; indexFirst <= length - maxSize ; indexFirst ++)
 	{
 		indexSecond = length - 1;
-		while(indexSecond >= indexFirst)
+		while(indexSecond - indexFirst >= maxSize)
 		{
 			if(s[indexSecond]==s[indexFirst])
 			{
 				printf("indexF:%d,indexS:%d,length:%d\n",indexFirst,indexSecond,length);
 				if(checkIsHuiWen(s,indexFirst,indexSecond))
 				{
-					if(maxSize < indexSecond - indexFirst + 1)
-					{
-						maxSize = indexSecond - indexFirst + 1;
-						maxClip = clipStr(s,indexFirst,maxSize) ;
-					}
+					maxSize = indexSecond - indexFirst + 1;
+					maxClip = clipStr(s,indexFirst,maxSize) ;
 				}
 			}
 			indexSecond --;
@@ -515,14 +512,203 @@ char* longestPalindrome(char* s) {
 	return maxClip ;
 }
 
- 
 
 
+
+
+#include<stdio.h>
+int leapYear(int year)
+{
+     if((year%4==0&&year%100!=0)||(year%400==0))
+     {
+         return 1 ;
+     }
+     else
+     {
+         return 0 ;
+     }
+}
+int theDayOfMonth(int month,int isLeap)
+{
+    if((month>=1) && (month <=7) && (month % 2 == 1))
+    {
+        return 31 ;
+    }
+    else if((month>7) && (month <=12) && (month % 2 == 0))
+    {
+        return 31 ;
+    }
+    else if((month == 2) && isLeap)
+    {
+        return 29 ;
+    }
+    else if((month == 2) && !isLeap)
+    {
+        return 28 ;
+    }
+    else
+    {
+        return 30;
+    }
+
+}
 int main()
 {
-	char test1 [5] = "babad";
-//	char test2 [4] = "caba";
-	printf("%s\n",longestPalindrome(test1));
-//	printf("%s",longestPalindrome(test2));
-	return 0;
+    int theSumOfDay = 0 ;
+    int month , year , remainder;
+
+    for( year = 1990 ; year < 2017 ; year ++ )
+    {
+        if(leapYear(year))
+        {
+            theSumOfDay = theSumOfDay + 366 ;
+        }
+        else
+        {
+            theSumOfDay = theSumOfDay + 365 ;
+        }
+    }
+    /*
+    for(i = 1 ; i <= 12 ; i ++)
+    {
+        printf("%d,%d\n",theDayOfMonth(i,1),theDayOfMonth(i,0));
+    }
+    */
+    for( month = 1 ; month < 10 ; month ++)
+    {
+        theSumOfDay = theSumOfDay + theDayOfMonth(month,leapYear(2017)) ;
+    }
+    theSumOfDay = theSumOfDay + 15 ;
+    remainder = theSumOfDay % 5 ;
+    if( remainder <= 3 )
+    {
+        printf("打渔");
+    }
+    else
+    {
+        printf("晒网");
+    }
+    return 0 ;
 }
+
+//#include<stdio.h>
+//#include<stdlib.h>
+//#include<Windows.h>
+//int fun(int x,char op,int y)
+//{
+//	printf("%c",op);
+//switch (op)
+//{
+//case '+':
+//	printf("加法执行了\n");
+//	return x+y;
+//case '-':
+//	printf("减法执行了\n");
+//	return x-y;
+//case '*':
+//	printf("乘法执行了\n");
+//	return x*y;
+//case '^':
+//	{
+//		printf("次方执行了\n");
+//		int re=1 , i;
+//		for( i=1;i<=y;i++)
+//			re*=x;
+//		return re;
+//	}
+//}
+//}
+//
+//int computer(int a,char op1,int b,char op2,int c)
+//{
+//	int op1sort=1,op2sort=1;
+//	if((op1=='+'||op1=='-')&&(op2=='*'||op2=='^'))
+//		op2sort=2;
+//	if(op1sort==op2sort)
+//		return fun(fun(a,op1,b),op2,c);
+//	else
+//		return fun(a,op1,fun(b,op2,c));
+//}
+//int main()
+//{
+//	int a,b,c;
+//	int result;
+//	char op1,op2;
+//	scanf("%d",&a);
+//	op1=getchar();
+//	scanf("%d",&b);
+//	op2=getchar();
+//	scanf("%d",&c);
+//	result=computer(a,op1,b,op2,c);
+//	printf("%d\n",result);
+//	system("pause");
+//	return 0;
+//}
+//
+
+
+//#include<stdio.h>
+//#include<stdlib.h>
+//#include<Windows.h>
+//struct node
+//{
+//	int date;
+//	struct node*next;
+//};
+//int main()
+//{
+//	struct node *p=NULL,*q=NULL,*h=NULL,*m=NULL;
+//	int i,n,j;
+//	printf("请输入个数\n");
+//	scanf("%d",&n);
+//	h=NULL;
+//	p=h;
+//	p=(struct node*)malloc(sizeof(struct node));
+//	scanf("%d",&p->date);
+//	q=p;
+//	h=p;
+//	for(i=1;i<n;i++)
+//	{
+//		p=(struct node*)malloc(sizeof(struct node));
+//		scanf("%d",&p->date);
+//		q->next=p;
+//		q=p;
+//	}
+//	q->next=NULL;
+//	m=(struct node*)malloc(sizeof(struct node));
+//	scanf("%d",&m->date);
+//	p=h;
+//	while(p!=NULL);
+//	{
+//		if(p->date>m->date)
+//		{
+//			printf("%s",p->date);
+//			printf("\n");}
+//			p=p->next;
+//		}
+//	system("pause");
+//	return 0;
+//}
+
+
+ 
+ 
+
+//
+//char source[15] = "rFna koBlrna d";
+//char target[15];
+//int main(void)
+//{
+//char input[16] = "abc,d";
+//char *p = NULL;
+///* strtok places a NULL terminator
+//in front of the token, if found */
+////p = strtok(input, ",");
+//if (p) printf("%s\n", p);
+///* A second call to strtok using a NULL
+//as the first parameter returns a pointer
+//to the character following the token */
+//p = strtok(NULL, ",");
+//if (p) printf("%s\n", p);
+//return 0;
+//}
