@@ -135,9 +135,9 @@
       scanf("%d",&x);
       while(x!=999)
       {
+          while()
           LinkList p = (LinkList)malloc(sizeof(LinkList));
           p->value = x ;
-          
       }
       return L;
   }
